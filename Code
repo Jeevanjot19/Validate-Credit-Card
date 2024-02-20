@@ -1,0 +1,65 @@
+#PROJECT
+# PYTHON program to Validate Credit Card and display the hidden information
+s=input("Please input a string ")
+cardnum=""
+for x in s:
+    if x.isdigit():             # Extract only digits from the string
+        cardnum=cardnum+x
+length=len(cardnum)
+
+if length>12 and length<19:    #Checking the length condition
+    checknum=cardnum[-1]
+    sum1,sum2=0,0
+    for x in cardnum[-2:-(length+1):-2]:   #Mod 10 algorithm 
+        double=int(x)*2
+        if double//10>0:
+            double=double%10+double//10
+        sum1+=double
+    for x in cardnum[-1:-(length+1):-2]:
+        sum2+=int(x)
+    sum=sum1+sum2
+    if sum%10==0:
+        mii=cardnum[0]
+        iin=cardnum[0:6]
+        
+        accnum=cardnum[6:-1]
+        print("Valid")               
+        print("The MII is " ,end="")
+        mii=int(mii)
+        if mii==1 or mii==2:
+            print("Airlines")
+        elif mii==3:
+            print("Travel")
+        elif mii==4 or mii==5:
+            print("Banking and Financial")
+        elif mii==6:
+            print(" Merchandising and Banking/Financial")
+        elif mii==7:
+            print("Petroleum")
+        elif mii==8:
+            print("Healthcare")
+        else:
+            print("Unknown")
+        print("The IIN  is ",end="")
+        iin=int(iin)
+        if int(iin)//10000==34 or int(iin)//10000==37:
+            print("Amex")
+        elif iin//100000==4:
+            print("Visa")
+        elif iin//10000==51 or iin//10000==55:
+            print("Mastercard")
+        elif iin//100==6011 or iin//100==644 or iin//1000==65:
+            print("Discover")
+        else:
+            print("Unknown")
+        print("Your account number is ", accnum)
+        print("The check digit is ", checknum)
+                
+    else:
+        y=10-(sum%10)
+        check=int(checknum)+y
+        if check>9:
+            check=check-10
+        print("Invalid Card Number. The check digit should have been ",check)
+else:
+    print("Invalid")
